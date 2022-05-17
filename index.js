@@ -1,48 +1,58 @@
-//❗❗ PLEASE READ THE README file for project instructions, helpful resources, additional tasks and stretch problems, and more ❗❗ 
+//❗❗ PLEASE READ THE README file for project instructions, helpful resources, additional tasks and stretch problems, and more ❗❗
 
 // ⭐️ Example Challenge START ⭐️
 
 /**Example Task : processFirstItem()
  * This example shows how you might go about solving the rest of the tasks
- * 
+ *
  * Use the higher order function processFirstItem below to do the following:
  *  1. Receive an array of strings in a parameter
  *  2. Receive a callback function that takes a string as its argument in a parameter
- *  3. Return the result of invoking the callback function and passing in the FIRST 
+ *  3. Return the result of invoking the callback function and passing in the FIRST
  *     element in the array as the argument
- * 
+ *
  * The following code is demonstrating a way of completing this task
  * It returns the string `foofoo`
-*/
+ */
 
 function processFirstItem(stringList, callback) {
-  return callback(stringList[0])
+  return callback(stringList[0]);
 }
-console.log('example task:', processFirstItem(['foo','bar'],function(str){return str+str}));
+console.log(
+  "example task:",
+  processFirstItem(["foo", "bar"], function (str) {
+    return str + str;
+  })
+);
 
 // ⭐️ Example Challenge END ⭐️
 
-
 ///// M V P ///////
-
-/*Task 1: counterMaker()
+/* 
+Task 1: counterMaker()
   
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
+    - counter1 is a function closure, counter2 is a regular function.
   
   2. Which of the two uses a closure? How can you tell?
-  
+      - counter1 is using a closure, I can tell by the counter function nested inside the counterMaker function 
+       and accessing the count variable in the lexical scope
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
-*/
+  - A scenario when we would like to use counter1 will be a situation when we need to have a nested function/s
+      that still have access to it's parent/s variables. or when we need to use a function as a call back function.
+  - A scenario when we would like to use counter2 will be when we need to write a function that has all the variables 
+      it requires to be functional in the local scope and/or the global scope and no need to access variables within other functions .
 
+ */
 // counter1 code
 function counterMaker() {
   let count = 0;
   return function counter() {
-   return count++;
-  }
+    return count++;
+  };
 }
 
 const counter1 = counterMaker();
@@ -54,7 +64,6 @@ function counter2() {
   return count++;
 }
 
-
 /* ⚾️⚾️⚾️ Task 2: inning() ⚾️⚾️⚾️
 Use the inning function below to do the following:
   1. Return a random whole number of points between 0 and 2 scored by one team in an inning
@@ -64,10 +73,11 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning() {
+  let score = Math.floor(Math.random() * 3);
+  return score;
 }
-
+console.log(inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -81,12 +91,19 @@ Use the finalScore function below to do the following:
   "Home": 11,
   "Away": 5
 }
-*/ 
+*/
 
-function finalScore(/*Code Here*/){
-  /*Code Here*/
+function finalScore(task2, numberOfInning) {
+  let homeScore = 0;
+  let awayScore = 0;
+  for (let i = 0; i < numberOfInning; i++) {
+    homeScore = homeScore + task2();
+    awayScore = awayScore + task2();
+  }
+  let finalScore = { Home: homeScore, Away: awayScore };
+  return finalScore;
 }
-
+console.log(finalScore(inning, 9));
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
@@ -100,12 +117,13 @@ For example: invoking getInningScore(inning) might return this object:
 }
   */
 
-
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
-
+function getInningScore(task2) {
+  let homeScore = task2();
+  let awayScore = task2();
+  let finalScore = { Home: homeScore, Away: awayScore };
+  return finalScore;
 }
-
+console.log(getInningScore(inning));
 
 /* STRETCH: ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
 Use the scoreboard function below to do the following:
@@ -151,13 +169,10 @@ function scoreboard(/* CODE HERE */) {
   /* CODE HERE */
 }
 
-
-
-
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
-function foo(){
-  console.log('its working');
-  return 'bar';
+function foo() {
+  console.log("its working");
+  return "bar";
 }
 foo();
 module.exports = {
@@ -169,4 +184,4 @@ module.exports = {
   finalScore,
   getInningScore,
   scoreboard,
-}
+};
